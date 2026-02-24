@@ -1,0 +1,54 @@
+.about-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 80px; }
+
+.about-intro {
+  font-family: 'Libre Baskerville', serif;
+  font-size: 22px; font-weight: 700;
+  line-height: 1.45; letter-spacing: -0.01em;
+  color: var(--ink); margin-bottom: 28px;
+  em { font-style: italic; color: var(--accent); }
+}
+.about-body {
+  font-size: 14px; line-height: 1.85;
+  color: var(--ink2); font-weight: 300; margin-bottom: 36px;
+  strong { color: var(--ink); font-weight: 500; }
+}
+.about-links { display: flex; gap: 12px; flex-wrap: wrap; }
+
+.btn-solid {
+  font-size: 12px; font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase;
+  background: var(--ink); color: white; padding: 12px 24px; text-decoration: none;
+  transition: background 0.2s; display: inline-block;
+  &:hover { background: var(--accent); }
+}
+.btn-outline {
+  font-size: 12px; font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase;
+  color: var(--ink); border: 1px solid var(--rule); padding: 12px 24px; text-decoration: none;
+  transition: border-color 0.2s; display: inline-block;
+  &:hover { border-color: var(--ink); }
+}
+
+.exp-timeline { display: flex; flex-direction: column; }
+.exp-row {
+  padding: 24px 0; border-bottom: 1px solid var(--border);
+  display: grid; grid-template-columns: 120px 1fr; gap: 24px;
+}
+.exp-date-col { font-size: 11px; color: var(--muted); font-weight: 500; line-height: 1.5; padding-top: 2px; }
+.exp-title { font-size: 14px; font-weight: 600; color: var(--ink); margin-bottom: 3px; }
+.exp-company-name {
+  font-size: 11px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase;
+  color: var(--accent); margin-bottom: 6px;
+}
+.exp-note { font-size: 12px; color: var(--muted); line-height: 1.6; font-weight: 300; }
+
+@media (max-width: 960px) { .about-grid { grid-template-columns: 1fr; gap: 48px; } }
+@media (max-width: 600px) {
+  .about-grid { gap: 36px; }
+  .about-intro { font-size: 18px; }
+  .about-body { font-size: 13px; }
+  .about-links { flex-direction: column; gap: 10px; }
+  .about-links .btn-solid, .about-links .btn-outline { text-align: center; }
+  .exp-row { grid-template-columns: 90px 1fr; gap: 16px; }
+  .exp-date-col { font-size: 10px; }
+  .exp-title { font-size: 13px; }
+  .exp-note { font-size: 11px; }
+}
