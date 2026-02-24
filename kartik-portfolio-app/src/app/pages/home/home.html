@@ -1,0 +1,57 @@
+<!-- HERO -->
+<div class="hero">
+  <div class="hero-left">
+    <div class="hero-tag">
+      <span></span>
+      Available for New Roles · Chandigarh, India
+    </div>
+
+    <h1 class="hero-headline">
+      Growth Marketer.<br />
+      <em>Brand-led.</em><br />
+      Performance-driven.
+    </h1>
+
+    <p class="hero-sub">
+      3+ years building demand across education, D2C sports, and service brands.
+    </p>
+  </div>
+
+  <div class="hero-right">
+    <div class="hero-photo-wrap">
+      <img
+        src="https://res.cloudinary.com/dkwiquxyb/image/upload/v1771954364/MyPicWithout_BG_vsnsog.png"
+        class="hero-photo"
+        alt="Kartik Joshi"
+      />
+      <div class="hero-photo-badge">Open to Work</div>
+    </div>
+  </div>
+</div>
+
+<div class="full-rule"></div>
+
+<!-- GALLERY -->
+<div class="gallery-section">
+  <div class="gallery-grid">
+    <div
+      *ngFor="let item of galleryItems"
+      class="gallery-item reveal"
+      (click)="openLightbox(item.src, item.alt, item.caption)"
+    >
+      <img [src]="item.src" [alt]="item.alt" loading="lazy" />
+      <div class="gallery-overlay">
+        <div class="gallery-caption">
+          {{ item.caption }}
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- LIGHTBOX -->
+<div class="lightbox" [class.open]="lightboxOpen" (click)="closeLightbox()">
+  <button class="lightbox-close" (click)="closeLightbox()">×</button>
+  <img [src]="lightboxImg" [alt]="lightboxAlt" />
+  <div class="lightbox-caption">{{ lightboxCaption }}</div>
+</div>
