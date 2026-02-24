@@ -1,0 +1,20 @@
+<div class="skills-bg" id="skills">
+  <div class="section-wrap">
+    <div class="section-head reveal">
+      <h2 class="section-title">Capabilities</h2>
+      <span class="section-count">{{ categories.length }} Disciplines</span>
+    </div>
+    <div class="skills-grid reveal">
+      @for (cat of categories; track cat.label) {
+        <div class="skill-block">
+          <div class="skill-block-title">{{ cat.label }}</div>
+          <div class="skill-list">
+            @for (skill of cat.skills; track skill) {
+              <span class="skill-item">{{ skill }}</span>
+            }
+          </div>
+        </div>
+      }
+    </div>
+  </div>
+</div>

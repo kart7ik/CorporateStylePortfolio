@@ -1,0 +1,25 @@
+<div class="contact-section" id="contact">
+  <div class="contact-inner">
+    <div class="contact-left reveal">
+      <div class="contact-pre">Open to Opportunities</div>
+      <h2 class="contact-h">
+        Let's discuss<br>your <em>next</em><br>growth challenge.
+      </h2>
+      <p class="contact-body">
+        Looking for a mid-level growth marketer who can own strategy and execution
+        across social, performance, and creative? Let's talk.
+      </p>
+    </div>
+    <div class="contact-right reveal">
+      @for (link of links; track link.label) {
+        <a class="contact-item" [href]="link.href" [target]="link.href.startsWith('http') ? '_blank' : '_self'">
+          <div>
+            <div class="contact-item-label">{{ link.label }}</div>
+            <div class="contact-item-val">{{ link.value }}</div>
+          </div>
+          <span class="contact-item-arrow">→</span>
+        </a>
+      }
+    </div>
+  </div>
+</div>

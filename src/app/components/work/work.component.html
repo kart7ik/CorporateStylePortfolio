@@ -1,0 +1,36 @@
+<div class="section-wrap" id="work">
+  <div class="section-head reveal">
+    <h2 class="section-title">Selected Experience</h2>
+    <span class="section-count">0{{ workItems.length }} Projects</span>
+  </div>
+  <div class="work-list">
+    @for (item of workItems; track item.index) {
+      <div class="work-row reveal">
+        <div class="work-num">{{ item.index }}</div>
+        <div class="work-main">
+          <div class="work-brand">{{ item.brand }}</div>
+          <div class="work-title">{{ item.title }}</div>
+          <div class="work-desc">{{ item.description }}</div>
+          @if (item.caseStudyLink) {
+            <a [routerLink]="item.caseStudyLink" class="case-link">
+              {{ item.caseStudyLabel }}
+            </a>
+          }
+        </div>
+        <div class="work-tags">
+          @for (tag of item.tags; track tag) {
+            <span class="w-tag">{{ tag }}</span>
+          }
+        </div>
+        <div class="work-metrics">
+          @for (metric of item.metrics; track metric.label) {
+            <div class="w-metric">
+              <span class="w-val">{{ metric.value }}</span>
+              <span class="w-label">{{ metric.label }}</span>
+            </div>
+          }
+        </div>
+      </div>
+    }
+  </div>
+</div>

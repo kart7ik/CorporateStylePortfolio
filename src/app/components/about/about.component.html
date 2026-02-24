@@ -1,0 +1,44 @@
+<div class="section-wrap" id="about">
+  <div class="section-head reveal">
+    <h2 class="section-title">About</h2>
+  </div>
+  <div class="about-grid">
+    <div class="about-left reveal">
+      <p class="about-intro">
+        Where <em>brand strategy</em> meets performance accountability.
+      </p>
+      <p class="about-body">
+        I'm a <strong>brand-led growth marketer</strong> with 3+ years of experience building demand
+        through clear positioning, compelling storytelling, and performance-driven distribution.
+        My approach is rooted in <strong>consumer psychology and classic brand principles</strong> —
+        creating ideas that earn attention first, and using paid channels as a distribution engine,
+        not a shortcut.<br><br>
+        I've worked across <strong>education, D2C sports, events, and service-based brands</strong>,
+        partnering closely with founders and teams to build scalable content systems, sharper narratives,
+        and sustainable growth loops — always balancing creative thinking with performance accountability.
+        <br><br>
+        Currently open to <strong>Growth Marketing Manager, Social Media Strategist,
+        and Creative Strategist</strong> roles at mid-level.
+      </p>
+      <div class="about-links">
+        <a class="btn-solid" href="mailto:kartikjoshi305@gmail.com">Send a Message</a>
+        <a class="btn-outline" href="https://www.linkedin.com/in/kart7ik" target="_blank">LinkedIn ↗</a>
+      </div>
+    </div>
+
+    <div class="about-right reveal">
+      <div class="exp-timeline">
+        @for (item of experience; track item.role) {
+          <div class="exp-row">
+            <div class="exp-date-col">{{ item.dateRange }}</div>
+            <div class="exp-content-col">
+              <div class="exp-title">{{ item.role }}</div>
+              <div class="exp-company-name">{{ item.company }}</div>
+              <div class="exp-note">{{ item.description }}</div>
+            </div>
+          </div>
+        }
+      </div>
+    </div>
+  </div>
+</div>
