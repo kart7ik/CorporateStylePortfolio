@@ -1,0 +1,971 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Case Study — Boss International Studies</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html, body { overflow-x: hidden; max-width: 100%; }
+
+  :root {
+    --bg: #fafaf8;
+    --white: #ffffff;
+    --ink: #1a1a18;
+    --ink2: #3d3d3a;
+    --muted: #9a9a96;
+    --border: #e8e8e4;
+    --accent: #1a4a8a;
+    --accent-light: #eef2f8;
+    --rule: #d4d4d0;
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--bg);
+    color: var(--ink);
+    font-family: 'Inter', sans-serif;
+    overflow-x: hidden;
+  }
+
+  /* NAV */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0;
+    background: rgba(250,250,248,0.96);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--border);
+    z-index: 100;
+    padding: 0 60px;
+    height: 64px;
+    display: flex; align-items: center; justify-content: space-between;
+  }
+  .nav-logo {
+    font-family: 'Libre Baskerville', serif;
+    font-size: 15px; font-weight: 700;
+    color: var(--ink); text-decoration: none;
+    letter-spacing: -0.01em;
+  }
+  .nav-tag {
+    font-size: 11px; font-weight: 500;
+    letter-spacing: 0.08em; text-transform: uppercase;
+    color: var(--muted);
+  }
+  .nav-right {
+    font-size: 12px; font-weight: 600;
+    letter-spacing: 0.04em;
+    color: var(--accent); text-decoration: none;
+    border: 1px solid var(--accent);
+    padding: 8px 18px;
+    transition: background 0.2s, color 0.2s;
+    display: inline-block;
+  }
+  .nav-right:hover { background: var(--accent); color: white; }
+
+  /* HERO */
+  .hero {
+    padding: 148px 60px 80px;
+    max-width: 1200px; margin: 0 auto;
+    border-bottom: 1px solid var(--border);
+  }
+  .hero-eyebrow {
+    display: flex; align-items: center; gap: 16px;
+    margin-bottom: 36px;
+  }
+  .hero-tag-pill {
+    display: inline-flex; align-items: center; gap: 8px;
+    font-size: 11px; font-weight: 600;
+    letter-spacing: 0.12em; text-transform: uppercase;
+    color: var(--accent);
+    background: var(--accent-light);
+    padding: 5px 12px;
+  }
+  .hero-tag-pill span {
+    width: 6px; height: 6px;
+    background: var(--accent); border-radius: 50%;
+  }
+  .hero-eyebrow-rule { height: 1px; width: 48px; background: var(--rule); }
+  .hero-eyebrow-date {
+    font-size: 11px; color: var(--muted);
+    font-weight: 400; letter-spacing: 0.06em;
+  }
+  .hero-headline {
+    font-family: 'Libre Baskerville', serif;
+    font-size: clamp(36px, 5.5vw, 68px);
+    font-weight: 700;
+    line-height: 1.08;
+    letter-spacing: -0.025em;
+    color: var(--ink);
+    margin-bottom: 32px;
+    max-width: 900px;
+  }
+  .hero-headline em { font-style: italic; color: var(--accent); }
+  .hero-sub {
+    font-size: 16px; line-height: 1.8;
+    color: var(--ink2); font-weight: 300;
+    max-width: 600px; margin-bottom: 56px;
+  }
+  .hero-stats {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    border: 1px solid var(--border);
+    background: var(--white);
+  }
+  .h-stat {
+    padding: 24px 28px;
+    border-right: 1px solid var(--border);
+  }
+  .h-stat:last-child { border-right: none; }
+  .h-stat-val {
+    font-family: 'Libre Baskerville', serif;
+    font-size: 26px; font-weight: 700;
+    color: var(--ink); letter-spacing: -0.02em;
+    display: block; margin-bottom: 4px;
+  }
+  .h-stat-val sup { font-size: 13px; color: var(--accent); }
+  .h-stat-label {
+    font-size: 11px; color: var(--muted);
+    font-weight: 400; letter-spacing: 0.04em; line-height: 1.4;
+  }
+
+  /* FULL RULE */
+  .full-rule { height: 1px; background: var(--border); margin: 0 60px; }
+
+  /* SECTION WRAPPER */
+  .section-wrap {
+    max-width: 1200px; margin: 0 auto;
+    padding: 80px 60px;
+  }
+  .section-head {
+    display: flex; align-items: baseline;
+    justify-content: space-between;
+    margin-bottom: 48px;
+    padding-bottom: 20px;
+    border-bottom: 1px solid var(--border);
+  }
+  .section-title {
+    font-family: 'Libre Baskerville', serif;
+    font-size: 26px; font-weight: 700;
+    letter-spacing: -0.02em; color: var(--ink);
+  }
+  .section-count {
+    font-size: 11px; color: var(--muted);
+    font-weight: 500; letter-spacing: 0.1em; text-transform: uppercase;
+  }
+
+  /* SCOPE BAND */
+  .scope-band {
+    background: var(--white);
+    border-top: 1px solid var(--border);
+    border-bottom: 1px solid var(--border);
+    padding: 0 60px;
+  }
+  .scope-inner {
+    max-width: 1200px; margin: 0 auto;
+    padding: 24px 0;
+    display: flex; gap: 32px; align-items: center; flex-wrap: wrap;
+  }
+  .scope-label {
+    font-size: 10px; font-weight: 600;
+    letter-spacing: 0.14em; text-transform: uppercase;
+    color: var(--muted); white-space: nowrap; flex-shrink: 0;
+  }
+  .scope-pills { display: flex; flex-wrap: wrap; gap: 8px; }
+  .scope-pill {
+    padding: 5px 12px;
+    background: var(--accent-light);
+    font-size: 11px; font-weight: 500;
+    color: var(--accent); letter-spacing: 0.04em;
+  }
+
+  /* CONTEXT */
+  .context-grid {
+    display: grid;
+    grid-template-columns: 1fr 1.6fr;
+    gap: 80px; align-items: start;
+  }
+  .context-label {
+    font-size: 10px; font-weight: 600;
+    letter-spacing: 0.14em; text-transform: uppercase;
+    color: var(--accent); margin-bottom: 16px;
+  }
+  .context-h {
+    font-family: 'Libre Baskerville', serif;
+    font-size: clamp(22px, 2.8vw, 30px);
+    font-weight: 700; line-height: 1.25;
+    letter-spacing: -0.02em; color: var(--ink);
+  }
+  .context-h em { font-style: italic; color: var(--accent); }
+  .context-body {
+    font-size: 14px; line-height: 1.9;
+    color: var(--ink2); font-weight: 300;
+  }
+  .context-body p + p { margin-top: 18px; }
+  .context-body strong { color: var(--ink); font-weight: 500; }
+
+  /* CHALLENGE CARDS */
+  .challenge-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 2px; margin-top: 56px;
+  }
+  .challenge-card {
+    background: var(--white);
+    border: 1px solid var(--border);
+    padding: 28px 24px;
+  }
+  .cc-num {
+    font-family: 'Libre Baskerville', serif;
+    font-size: 32px; font-weight: 700;
+    color: var(--accent-light);
+    letter-spacing: -0.03em;
+    line-height: 1; margin-bottom: 16px;
+    -webkit-text-stroke: 1px var(--rule);
+  }
+  .cc-text {
+    font-size: 13px; line-height: 1.7;
+    color: var(--ink2); font-weight: 300;
+  }
+
+  /* PILLARS */
+  .pillar-row {
+    display: grid;
+    grid-template-columns: 64px 1fr 280px;
+    gap: 48px; align-items: start;
+    padding: 48px 0;
+    border-bottom: 1px solid var(--border);
+  }
+  .pillar-num {
+    font-size: 12px; color: var(--muted);
+    font-weight: 500; letter-spacing: 0.06em; padding-top: 4px;
+  }
+  .pillar-brand {
+    font-size: 10px; font-weight: 600;
+    letter-spacing: 0.14em; text-transform: uppercase;
+    color: var(--accent); margin-bottom: 8px;
+  }
+  .pillar-title {
+    font-family: 'Libre Baskerville', serif;
+    font-size: 20px; font-weight: 700;
+    letter-spacing: -0.01em; color: var(--ink);
+    margin-bottom: 16px; line-height: 1.3;
+  }
+  .pillar-body {
+    font-size: 13px; line-height: 1.8;
+    color: var(--ink2); font-weight: 300;
+  }
+  .pillar-body p + p { margin-top: 12px; }
+  .pillar-body strong { color: var(--ink); font-weight: 500; }
+  .pillar-tags {
+    margin-top: 20px;
+    display: flex; flex-direction: column; gap: 6px;
+  }
+  .p-tag {
+    font-size: 11px; color: var(--muted);
+    letter-spacing: 0.06em;
+    display: flex; align-items: center; gap: 6px;
+  }
+  .p-tag::before {
+    content: ''; width: 3px; height: 3px;
+    background: var(--rule); border-radius: 50%;
+  }
+  .pillar-metrics {
+    padding-top: 4px; display: flex; flex-direction: column; gap: 20px;
+  }
+  .pm-val {
+    font-family: 'Libre Baskerville', serif;
+    font-size: 22px; font-weight: 700;
+    color: var(--ink); letter-spacing: -0.02em; display: block;
+  }
+  .pm-val sup { font-size: 11px; color: var(--accent); }
+  .pm-label {
+    font-size: 10px; color: var(--muted);
+    letter-spacing: 0.08em; text-transform: uppercase;
+    display: block; margin-top: 2px;
+  }
+
+  /* CAMPAIGN DARK SECTION */
+  .campaign-feature { background: var(--ink); padding: 64px 60px; }
+  .cf-inner {
+    max-width: 1200px; margin: 0 auto;
+    display: grid; grid-template-columns: 1fr 1fr;
+    gap: 80px; align-items: start;
+  }
+  .cf-tag {
+    font-size: 10px; font-weight: 600;
+    letter-spacing: 0.14em; text-transform: uppercase;
+    color: rgba(255,255,255,0.4);
+    display: block;
+    margin-bottom: 24px;
+    padding-bottom: 16px;
+    border-bottom: 1px solid rgba(255,255,255,0.08);
+  }
+  .cf-h {
+    font-family: 'Libre Baskerville', serif;
+    font-size: clamp(26px, 3vw, 38px);
+    font-weight: 700; letter-spacing: -0.02em;
+    color: white; line-height: 1.15; margin-bottom: 24px;
+  }
+  .cf-h em { font-style: italic; color: rgba(255,255,255,0.5); }
+  .cf-body {
+    font-size: 14px; line-height: 1.85;
+    color: rgba(255,255,255,0.55); font-weight: 300;
+  }
+  .cf-body p + p { margin-top: 14px; }
+  .cf-impact-label {
+    font-size: 10px; font-weight: 600;
+    letter-spacing: 0.14em; text-transform: uppercase;
+    color: rgba(255,255,255,0.3);
+    margin-bottom: 24px;
+    padding-bottom: 14px;
+    border-bottom: 1px solid rgba(255,255,255,0.07);
+  }
+  .cf-impact-list { display: flex; flex-direction: column; gap: 18px; }
+  .cf-impact-item { display: flex; align-items: flex-start; gap: 14px; }
+  .cf-impact-icon {
+    width: 32px; height: 32px; flex-shrink: 0;
+    background: rgba(255,255,255,0.05);
+    border: 1px solid rgba(255,255,255,0.08);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 13px;
+  }
+  .cf-impact-title {
+    font-size: 13px; font-weight: 500;
+    color: rgba(255,255,255,0.85); margin-bottom: 3px;
+  }
+  .cf-impact-desc {
+    font-size: 12px; color: rgba(255,255,255,0.4);
+    line-height: 1.5; font-weight: 300;
+  }
+
+  /* RESULTS */
+  .results-grid {
+    display: grid; grid-template-columns: repeat(3, 1fr); gap: 2px;
+  }
+  .result-card {
+    background: var(--white); border: 1px solid var(--border);
+    padding: 36px 28px; transition: border-color 0.2s;
+  }
+  .result-card:hover { border-color: var(--accent); }
+  .rc-val {
+    font-family: 'Libre Baskerville', serif;
+    font-size: 32px; font-weight: 700;
+    color: var(--ink); letter-spacing: -0.025em;
+    display: block; margin-bottom: 8px;
+  }
+  .rc-val sup { font-size: 16px; color: var(--accent); }
+  .rc-title { font-size: 13px; font-weight: 600; color: var(--ink); margin-bottom: 8px; }
+  .rc-desc { font-size: 12px; color: var(--muted); line-height: 1.65; font-weight: 300; }
+
+  /* TIMELINE */
+  .tl-row {
+    display: grid; grid-template-columns: 140px 1fr;
+    gap: 40px; padding: 32px 0; border-bottom: 1px solid var(--border);
+  }
+  .tl-phase { font-size: 11px; color: var(--muted); font-weight: 500; letter-spacing: 0.06em; line-height: 1.5; padding-top: 2px; }
+  .tl-phase strong {
+    display: block; font-size: 10px; font-weight: 600;
+    letter-spacing: 0.1em; text-transform: uppercase;
+    color: var(--accent); margin-bottom: 4px;
+  }
+  .tl-title { font-size: 14px; font-weight: 600; color: var(--ink); margin-bottom: 6px; }
+  .tl-body { font-size: 13px; line-height: 1.75; color: var(--ink2); font-weight: 300; }
+
+  /* MEDIA SECTION */
+  .media-section { background: var(--white); }
+  .media-grid {
+    display: grid; grid-template-columns: repeat(3, 1fr); gap: 2px;
+  }
+  .media-card {
+    background: var(--bg); border: 1px solid var(--border);
+    padding: 28px 24px; text-decoration: none;
+    display: flex; flex-direction: column;
+    transition: background 0.2s, border-color 0.2s;
+  }
+  .media-card:hover { background: var(--white); border-color: var(--accent); }
+  .media-card-type {
+    font-size: 10px; font-weight: 600;
+    letter-spacing: 0.14em; text-transform: uppercase;
+    color: var(--accent); margin-bottom: 14px;
+    padding-bottom: 12px; border-bottom: 1px solid var(--border);
+    display: flex; align-items: center; gap: 8px;
+  }
+  .media-icon {
+    width: 22px; height: 22px;
+    background: var(--accent-light);
+    display: inline-flex; align-items: center; justify-content: center;
+    font-size: 11px; flex-shrink: 0;
+  }
+  .media-card-title {
+    font-family: 'Libre Baskerville', serif;
+    font-size: 16px; font-weight: 700;
+    color: var(--ink); line-height: 1.3;
+    margin-bottom: 10px; letter-spacing: -0.01em;
+  }
+  .media-card-desc {
+    font-size: 12px; color: var(--muted);
+    line-height: 1.65; font-weight: 300; flex: 1;
+  }
+  .media-card-footer {
+    margin-top: 20px;
+    display: flex; justify-content: space-between; align-items: center;
+    padding-top: 14px; border-top: 1px solid var(--border);
+  }
+  .media-card-link { font-size: 11px; font-weight: 600; color: var(--accent); }
+  .media-card-arrow {
+    font-size: 14px; color: var(--muted);
+    transition: color 0.2s, transform 0.2s;
+  }
+  .media-card:hover .media-card-arrow { color: var(--accent); transform: translateX(4px); }
+
+  /* CONTACT */
+  .contact-section { background: var(--ink); }
+  .contact-inner {
+    max-width: 1200px; margin: 0 auto;
+    padding: 80px 60px;
+    display: grid; grid-template-columns: 1fr 1fr;
+    gap: 80px; align-items: center;
+  }
+  .contact-pre {
+    font-size: 10px; font-weight: 600;
+    letter-spacing: 0.16em; text-transform: uppercase;
+    color: rgba(255,255,255,0.35); margin-bottom: 16px;
+  }
+  .contact-h {
+    font-family: 'Libre Baskerville', serif;
+    font-size: clamp(26px, 3.2vw, 40px);
+    font-weight: 700; letter-spacing: -0.02em;
+    color: white; line-height: 1.2; margin-bottom: 20px;
+  }
+  .contact-h em { font-style: italic; color: rgba(255,255,255,0.5); }
+  .contact-body { font-size: 14px; line-height: 1.7; color: rgba(255,255,255,0.5); font-weight: 300; }
+  .contact-right { display: flex; flex-direction: column; gap: 14px; }
+  .contact-item {
+    background: rgba(255,255,255,0.04);
+    border: 1px solid rgba(255,255,255,0.08);
+    padding: 20px 24px;
+    display: flex; justify-content: space-between; align-items: center;
+    text-decoration: none;
+    transition: background 0.2s, border-color 0.2s;
+  }
+  .contact-item:hover { background: rgba(255,255,255,0.07); border-color: rgba(255,255,255,0.15); }
+  .contact-item-label {
+    font-size: 10px; font-weight: 600;
+    letter-spacing: 0.12em; text-transform: uppercase;
+    color: rgba(255,255,255,0.35); margin-bottom: 4px;
+  }
+  .contact-item-val { font-size: 14px; color: white; font-weight: 400; }
+  .contact-item-arrow { font-size: 16px; color: rgba(255,255,255,0.3); transition: color 0.2s, transform 0.2s; }
+  .contact-item:hover .contact-item-arrow { color: white; transform: translateX(4px); }
+
+  /* FOOTER */
+  footer {
+    background: var(--ink);
+    border-top: 1px solid rgba(255,255,255,0.06);
+    padding: 24px 60px;
+    display: flex; justify-content: space-between; align-items: center;
+  }
+  .footer-left { font-size: 11px; color: rgba(255,255,255,0.25); letter-spacing: 0.04em; }
+  .footer-right { font-size: 11px; color: rgba(255,255,255,0.25); text-decoration: none; transition: color 0.2s; }
+  .footer-right:hover { color: rgba(255,255,255,0.6); }
+
+  /* REVEAL */
+  .reveal { opacity: 1; transform: translateY(0); transition: opacity 0.6s ease, transform 0.6s ease; }
+  .js-reveal { opacity: 0; transform: translateY(16px); }
+  .reveal.visible { opacity: 1; transform: translateY(0); }
+
+  /* RESPONSIVE */
+  @media (max-width: 960px) {
+    nav { padding: 0 24px; }
+    .nav-tag { display: none; }
+    .hero { padding: 110px 24px 60px; }
+    .hero-stats { grid-template-columns: 1fr 1fr; }
+    .h-stat:nth-child(2) { border-right: none; }
+    .full-rule { margin: 0 24px; }
+    .section-wrap { padding: 64px 24px; }
+    .scope-band { padding: 0 24px; }
+    .context-grid { grid-template-columns: 1fr; gap: 36px; }
+    .challenge-grid { grid-template-columns: 1fr 1fr; }
+    .pillar-row { grid-template-columns: 1fr; gap: 20px; }
+    .pillar-num { display: none; }
+    .campaign-feature { padding: 48px 24px; }
+    .cf-inner { grid-template-columns: 1fr; gap: 48px; }
+    .results-grid { grid-template-columns: 1fr 1fr; }
+    .tl-row { grid-template-columns: 100px 1fr; gap: 24px; }
+    .media-grid { grid-template-columns: 1fr 1fr; }
+    .contact-inner { grid-template-columns: 1fr; gap: 40px; padding: 60px 24px; }
+    footer { padding: 20px 24px; }
+  }
+  @media (max-width: 600px) {
+    nav { padding: 0 16px; height: 56px; }
+    .hero { padding: 84px 16px 48px; }
+    .hero-stats { grid-template-columns: 1fr 1fr; }
+    .h-stat { padding: 18px 16px; }
+    .h-stat-val { font-size: 20px; }
+    .full-rule { margin: 0 16px; }
+    .section-wrap { padding: 48px 16px; }
+    .section-head { flex-direction: column; gap: 4px; margin-bottom: 28px; }
+    .scope-band { padding: 0 16px; }
+    .challenge-grid { grid-template-columns: 1fr; }
+    .results-grid { grid-template-columns: 1fr; }
+    .media-grid { grid-template-columns: 1fr; }
+    .tl-row { grid-template-columns: 1fr; gap: 8px; }
+    .campaign-feature { padding: 40px 16px; }
+    .contact-inner { padding: 48px 16px; gap: 32px; }
+    footer { padding: 20px 16px; flex-direction: column; gap: 6px; text-align: center; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a class="nav-logo" href="#">Boss International Studies</a>
+  <span class="nav-tag">Case Study</span>
+  <a class="nav-right" href="#contact">Work With Me</a>
+</nav>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="hero-eyebrow reveal">
+    <div class="hero-tag-pill"><span></span>Case Study</div>
+    <div class="hero-eyebrow-rule"></div>
+    <div class="hero-eyebrow-date">Chandigarh HQ · Punjab & Haryana · Aug 2024–Present</div>
+  </div>
+  <h1 class="hero-headline reveal">
+    ₹1Cr+ Every Month.<br>
+    Built on <em>Stories</em>,<br>Not Sales Pitches.
+  </h1>
+  <p class="hero-sub reveal">
+    How emotional content strategy, a culturally rooted viral campaign, and an engineered inbound lead system helped Boss International Studies consistently dominate the study visa market across Punjab and Haryana — operating from the Chandigarh HQ.
+  </p>
+  <div class="hero-stats reveal">
+    <div class="h-stat">
+      <span class="h-stat-val">100+</span>
+      <span class="h-stat-label">Verified leads per day</span>
+    </div>
+    <div class="h-stat">
+      <span class="h-stat-val"><sup>₹</sup>1Cr+</span>
+      <span class="h-stat-label">Avg. monthly sales · Chandigarh branch</span>
+    </div>
+    <div class="h-stat">
+      <span class="h-stat-val">17K→30K</span>
+      <span class="h-stat-label">Instagram followers grown</span>
+    </div>
+    <div class="h-stat">
+      <span class="h-stat-val"><sup>₹</sup>50–150</span>
+      <span class="h-stat-label">Cost per qualified lead</span>
+    </div>
+  </div>
+</div>
+
+<!-- SCOPE BAND -->
+<div class="scope-band">
+  <div class="scope-inner">
+    <span class="scope-label">Scope</span>
+    <div class="scope-pills">
+      <span class="scope-pill">Instagram Growth</span>
+      <span class="scope-pill">Content Strategy</span>
+      <span class="scope-pill">Viral Campaign Direction</span>
+      <span class="scope-pill">Paid Ad Management</span>
+      <span class="scope-pill">Inbound Lead Operations</span>
+      <span class="scope-pill">Sales Pipeline Oversight</span>
+      <span class="scope-pill">Creative Direction</span>
+    </div>
+  </div>
+</div>
+
+<div class="full-rule"></div>
+
+<!-- CONTEXT -->
+<div class="section-wrap">
+  <div class="context-grid">
+    <div class="reveal">
+      <div class="context-label">The Brand</div>
+      <h2 class="context-h">A market full of<br>promises.<br>Zero <em>trust</em>.</h2>
+    </div>
+    <div class="reveal">
+      <div class="context-body">
+        <p>Boss International Studies is a study visa consultancy headquartered in Chandigarh, with branches across the region, serving students and families from Punjab and Haryana — two of India's most active study-abroad corridors. Their clients have real dreams, real savings on the line, and very little tolerance for broken promises.</p>
+        <p>The market wasn't short on consultancies. Every billboard, every WhatsApp forward, every Facebook ad said essentially the same thing. The challenge wasn't awareness — it was <strong>belief</strong>. Getting a family from Ambala or Ludhiana to trust a brand they discovered on Instagram required a fundamentally different approach than conventional marketing.</p>
+        <p>Since August 2024, the strategy built here hasn't just generated leads — it has built the kind of brand equity that makes people feel like they already know you before they ever walk through the door.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="challenge-grid reveal">
+    <div class="challenge-card">
+      <div class="cc-num">01</div>
+      <p class="cc-text">Hyper-competitive market with hundreds of consultancies making identical promises across Punjab.</p>
+    </div>
+    <div class="challenge-card">
+      <div class="cc-num">02</div>
+      <p class="cc-text">Low brand differentiation — content was promotional, transactional, and forgettable.</p>
+    </div>
+    <div class="challenge-card">
+      <div class="cc-num">03</div>
+      <p class="cc-text">No structured inbound system — enquiries were inconsistent, unverified, and poorly distributed.</p>
+    </div>
+    <div class="challenge-card">
+      <div class="cc-num">04</div>
+      <p class="cc-text">Families make emotional decisions. The brand needed storytelling, not sales copy.</p>
+    </div>
+  </div>
+</div>
+
+<div class="full-rule"></div>
+
+<!-- PILLARS -->
+<div class="section-wrap">
+  <div class="section-head reveal">
+    <h2 class="section-title">The Approach</h2>
+    <span class="section-count">Three Pillars</span>
+  </div>
+
+  <!-- Pillar 1 -->
+  <div class="pillar-row reveal">
+    <div class="pillar-num">01</div>
+    <div>
+      <div class="pillar-brand">Instagram & Content</div>
+      <h3 class="pillar-title">Building a Brand People Could<br>Actually Feel.</h3>
+      <div class="pillar-body">
+        <p>The feed was rebuilt around one idea: students don't trust brands, they trust people who look like them. Every content piece was designed to feel regional, real, and relatable — not polished in a way that felt out of reach for a family in Bathinda or Karnal.</p>
+        <p>A video-first strategy anchored the account. Reels became the primary vehicle, with consistent output that prioritised emotional storytelling over promotional messaging — student success stories, family reactions, honest process walkthroughs.</p>
+        <p>After a mid-journey account suspension, the rebuild phase became an opportunity to apply everything learned: sharper hooks, tighter CTAs, and a content calendar that balanced viral potential with long-term trust building.</p>
+      </div>
+      <div class="pillar-tags">
+        <span class="p-tag">Video-first reel strategy</span>
+        <span class="p-tag">Student & family success stories</span>
+        <span class="p-tag">Regional, culturally rooted content</span>
+        <span class="p-tag">Consistent publishing cadence</span>
+      </div>
+    </div>
+    <div class="pillar-metrics">
+      <div>
+        <span class="pm-val">17K → 30K</span>
+        <span class="pm-label">Followers grown</span>
+      </div>
+      <div>
+        <span class="pm-val">Varied</span>
+        <span class="pm-label">Reach — some viral, consistent floor</span>
+      </div>
+      <div>
+        <span class="pm-val">Rebuilt</span>
+        <span class="pm-label">After account suspension</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Pillar 3 -->
+  <div class="pillar-row reveal">
+    <div class="pillar-num">03</div>
+    <div>
+      <div class="pillar-brand">Lead Generation & Operations</div>
+      <h3 class="pillar-title">Turning Attention Into<br>a Revenue Engine.</h3>
+      <div class="pillar-body">
+        <p>Content built the brand. Paid media scaled it. But the real leverage was in building a <strong>system</strong> — not just generating leads, but ensuring every lead was verified, routed correctly, and followed up within a consistent window.</p>
+        <p>Inbound lead operations across both Chandigarh and Jalandhar branches are currently overseen end-to-end: from the paid campaigns driving enquiries at ₹50–₹150 per lead, through verification and structured follow-up workflows that keep the pipeline clean and conversion rates predictable.</p>
+        <p>100+ verified leads per day is a floor, not a ceiling. The ₹1Cr+ average monthly revenue from the Chandigarh branch is a direct function of this system working exactly as designed.</p>
+      </div>
+      <div class="pillar-tags">
+        <span class="p-tag">Paid campaign management (Meta Ads)</span>
+        <span class="p-tag">Lead verification & routing</span>
+        <span class="p-tag">Structured follow-up workflows</span>
+        <span class="p-tag">Multi-branch pipeline oversight</span>
+      </div>
+    </div>
+    <div class="pillar-metrics">
+      <div>
+        <span class="pm-val">100+</span>
+        <span class="pm-label">Verified leads / day</span>
+      </div>
+      <div>
+        <span class="pm-val"><sup>₹</sup>50–150</span>
+        <span class="pm-label">Cost per qualified lead</span>
+      </div>
+      <div>
+        <span class="pm-val"><sup>₹</sup>1Cr+</span>
+        <span class="pm-label">Avg. monthly revenue contribution</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- CAMPAIGN FEATURE — DARK -->
+<div class="campaign-feature">
+  <div class="cf-inner">
+    <div>
+      <span class="cf-tag">★  &nbsp; Signature Campaign · Pillar 02</span>
+      <h2 class="cf-h">Visa Surprise<br><em>Delivery.</em></h2>
+      <div class="cf-body">
+        <p>Instead of posting a graphic that said "Congratulations on your visa," we showed up at their homes.</p>
+        <p>The concept was simple and human: physically visit approved students and their families with a surprise visa delivery. But what the camera captured was something no promotional post ever could — raw relief on a mother's face. A father laughing through tears. The moment a family realises their child is actually going.</p>
+        <p>To deepen cultural resonance, visuals were shot across recognisable Punjab and Haryana landscapes — village homes, familiar streets, regional backdrops. This wasn't corporate marketing. It was a mirror held up to the community, showing them their own story.</p>
+        <p>Every video was structured with tight 3-second hooks, emotional pacing built to a payoff, and a clear CTA that converted the feeling into an enquiry. The result was the most organically shared content series the brand had ever produced.</p>
+      </div>
+    </div>
+    <div>
+      <div class="cf-impact-label">What Made It Work</div>
+      <div class="cf-impact-list">
+        <div class="cf-impact-item">
+          <div class="cf-impact-icon">📍</div>
+          <div>
+            <div class="cf-impact-title">Filmed Across Punjab</div>
+            <div class="cf-impact-desc">Village homes, city streets across Punjab and Haryana — visuals that felt like the audience's own neighbourhood.</div>
+          </div>
+        </div>
+        <div class="cf-impact-item">
+          <div class="cf-impact-icon">🎬</div>
+          <div>
+            <div class="cf-impact-title">Shot & Directed In-House</div>
+            <div class="cf-impact-desc">Personally visited clients' homes, directed the moments, and structured each video from behind the camera.</div>
+          </div>
+        </div>
+        <div class="cf-impact-item">
+          <div class="cf-impact-icon">⚡</div>
+          <div>
+            <div class="cf-impact-title">3-Second Hook Framework</div>
+            <div class="cf-impact-desc">Every video engineered to stop the scroll — emotional pacing from open to CTA.</div>
+          </div>
+        </div>
+        <div class="cf-impact-item">
+          <div class="cf-impact-icon">📈</div>
+          <div>
+            <div class="cf-impact-title">Enquiry Spikes Post-Release</div>
+            <div class="cf-impact-desc">Each campaign drop drove a measurable surge in inbound enquiries — organic reach amplified by genuine shares.</div>
+          </div>
+        </div>
+        <div class="cf-impact-item">
+          <div class="cf-impact-icon">🏆</div>
+          <div>
+            <div class="cf-impact-title">Most Shared Organic Content</div>
+            <div class="cf-impact-desc">Strongest brand equity moment — elevated trust positioning in a sceptical, crowded market.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="full-rule"></div>
+
+<!-- RESULTS -->
+<div class="section-wrap">
+  <div class="section-head reveal">
+    <h2 class="section-title">The Numbers</h2>
+    <span class="section-count">Outcomes</span>
+  </div>
+  <div class="results-grid">
+    <div class="result-card reveal">
+      <span class="rc-val"><sup>₹</sup>1Cr+</span>
+      <div class="rc-title">Monthly Revenue Contribution</div>
+      <p class="rc-desc">Average monthly sales from the Chandigarh head branch, sustained consistently over the engagement period.</p>
+    </div>
+    <div class="result-card reveal">
+      <span class="rc-val">100+</span>
+      <div class="rc-title">Verified Leads Per Day</div>
+      <p class="rc-desc">Qualified inbound leads generated daily across a managed paid + organic ecosystem.</p>
+    </div>
+    <div class="result-card reveal">
+      <span class="rc-val"><sup>₹</sup>50–150</span>
+      <div class="rc-title">Cost Per Lead</div>
+      <p class="rc-desc">Highly efficient CPL for a high-ticket market where competitors rely on unstructured referral chains.</p>
+    </div>
+    <div class="result-card reveal">
+      <span class="rc-val">17K→30K</span>
+      <div class="rc-title">Instagram Growth</div>
+      <p class="rc-desc">Nearly doubled organically — before account suspension required a full rebuild with an improved strategy.</p>
+    </div>
+    <div class="result-card reveal">
+      <span class="rc-val">Viral</span>
+      <div class="rc-title">Surprise Delivery Campaign</div>
+      <p class="rc-desc">Most shared organic content the brand produced — strong regional resonance, measurable enquiry spikes.</p>
+    </div>
+    <div class="result-card reveal">
+      <span class="rc-val">Aug '24</span>
+      <div class="rc-title">Ongoing Engagement</div>
+      <p class="rc-desc">Active since August 2024 — continuous ownership across content, paid ads, and sales operations at the Chandigarh HQ.</p>
+    </div>
+  </div>
+</div>
+
+<div class="full-rule"></div>
+
+<!-- TIMELINE -->
+<div class="section-wrap">
+  <div class="section-head reveal">
+    <h2 class="section-title">How It Unfolded</h2>
+    <span class="section-count">5 Phases</span>
+  </div>
+  <div>
+    <div class="tl-row reveal">
+      <div class="tl-phase"><strong>Phase 01</strong>Aug 2024</div>
+      <div>
+        <div class="tl-title">Repositioning the Brand Voice</div>
+        <p class="tl-body">Shifted content strategy from promotional to story-led. Established a video-first cadence on Instagram. Introduced student narratives and regional cultural anchoring to build recall in a crowded market.</p>
+      </div>
+    </div>
+    <div class="tl-row reveal">
+      <div class="tl-phase"><strong>Phase 02</strong>Growth</div>
+      <div>
+        <div class="tl-title">17K to 30K & the Viral Campaign</div>
+        <p class="tl-body">Consistent reel output drove organic follower growth. Conceptualised and executed the Visa Surprise Delivery campaign — the brand's most successful content series. Inbound enquiry volumes increased measurably with each release.</p>
+      </div>
+    </div>
+    <div class="tl-row reveal">
+      <div class="tl-phase"><strong>Phase 03</strong>Rebuild</div>
+      <div>
+        <div class="tl-title">Account Suspension & Recovery</div>
+        <p class="tl-body">The Instagram account faced a suspension requiring a full rebuild from scratch. Applied a sharpened strategy with improved hooks and a refined content calendar — rebuilding momentum faster than the original growth curve.</p>
+      </div>
+    </div>
+    <div class="tl-row reveal">
+      <div class="tl-phase"><strong>Phase 04</strong>Scale</div>
+      <div>
+        <div class="tl-title">Lead Engine at Full Capacity</div>
+        <p class="tl-body">Scaled paid campaigns achieving ₹50–₹150 CPL. Built structured inbound operations across Chandigarh and Jalandhar — 100+ verified leads daily, ₹1Cr+ monthly revenue from the head branch.</p>
+      </div>
+    </div>
+    <div class="tl-row reveal">
+      <div class="tl-phase"><strong>Phase 05</strong>Present</div>
+      <div>
+        <div class="tl-title">Ongoing — Building the Next Phase</div>
+        <p class="tl-body">Currently overseeing all inbound lead operations, content strategy, and social media management at the Chandigarh HQ — serving audiences across Punjab and Haryana. Rebuilding Instagram presence and expanding the system with a focus on consistent revenue growth.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="full-rule"></div>
+
+<!-- MEDIA / WORK SAMPLES -->
+<div class="media-section" id="media">
+  <div class="section-wrap">
+    <div class="section-head reveal">
+      <h2 class="section-title">Work Samples</h2>
+      <span class="section-count">Campaigns &amp; Content</span>
+    </div>
+    <div class="media-grid">
+
+      <a class="media-card reveal" href="YOUR_GOOGLE_DRIVE_LINK_1" target="_blank" rel="noopener">
+        <div class="media-card-type"><span class="media-icon">▶</span> Campaign Videos</div>
+        <div class="media-card-title">Visa Surprise Delivery — Full Campaign</div>
+        <p class="media-card-desc">All videos from the viral campaign series — raw family reactions, behind-the-scenes footage, and final edited reels shot across Punjab.</p>
+        <div class="media-card-footer">
+          <span class="media-card-link">View on Drive</span>
+          <span class="media-card-arrow">→</span>
+        </div>
+      </a>
+
+      <a class="media-card reveal" href="YOUR_GOOGLE_DRIVE_LINK_2" target="_blank" rel="noopener">
+        <div class="media-card-type"><span class="media-icon">📊</span> Performance Reports</div>
+        <div class="media-card-title">Lead Generation & Ad Performance Data</div>
+        <p class="media-card-desc">Campaign analytics, CPL breakdowns, monthly lead volume reports, and paid media performance snapshots from active campaigns.</p>
+        <div class="media-card-footer">
+          <span class="media-card-link">View on Drive</span>
+          <span class="media-card-arrow">→</span>
+        </div>
+      </a>
+
+      <a class="media-card reveal" href="YOUR_GOOGLE_DRIVE_LINK_3" target="_blank" rel="noopener">
+        <div class="media-card-type"><span class="media-icon">📱</span> Content Creatives</div>
+        <div class="media-card-title">Instagram Reels & Creative Strategy</div>
+        <p class="media-card-desc">A selection of published reels, creative briefs, content calendar samples, and hook frameworks used across the Instagram strategy.</p>
+        <div class="media-card-footer">
+          <span class="media-card-link">View on Drive</span>
+          <span class="media-card-arrow">→</span>
+        </div>
+      </a>
+
+      <a class="media-card reveal" href="YOUR_GOOGLE_DRIVE_LINK_4" target="_blank" rel="noopener">
+        <div class="media-card-type"><span class="media-icon">🖼</span> Brand Creatives</div>
+        <div class="media-card-title">Social Media Design & Brand Assets</div>
+        <p class="media-card-desc">Graphic posts, story templates, promotional creatives, and brand design work created for Boss International's social presence.</p>
+        <div class="media-card-footer">
+          <span class="media-card-link">View on Drive</span>
+          <span class="media-card-arrow">→</span>
+        </div>
+      </a>
+
+      <a class="media-card reveal" href="YOUR_GOOGLE_DRIVE_LINK_5" target="_blank" rel="noopener">
+        <div class="media-card-type"><span class="media-icon">📸</span> BTS & Field Work</div>
+        <div class="media-card-title">Behind the Scenes — Surprise Deliveries</div>
+        <p class="media-card-desc">Field photography from visa delivery visits — candid family moments, location setups, and production stills from across Punjab.</p>
+        <div class="media-card-footer">
+          <span class="media-card-link">View on Drive</span>
+          <span class="media-card-arrow">→</span>
+        </div>
+      </a>
+
+      <a class="media-card reveal" href="YOUR_GOOGLE_DRIVE_LINK_6" target="_blank" rel="noopener">
+        <div class="media-card-type"><span class="media-icon">📋</span> Strategy Docs</div>
+        <div class="media-card-title">Content Strategy & Lead System Overview</div>
+        <p class="media-card-desc">Strategic frameworks, content planning documents, lead funnel architecture, and process documentation for the inbound operations system.</p>
+        <div class="media-card-footer">
+          <span class="media-card-link">View on Drive</span>
+          <span class="media-card-arrow">→</span>
+        </div>
+      </a>
+
+    </div>
+  </div>
+</div>
+
+<div class="full-rule"></div>
+
+<!-- CONTACT -->
+<div class="contact-section" id="contact">
+  <div class="contact-inner">
+    <div class="reveal">
+      <div class="contact-pre">Let's Work Together</div>
+      <h2 class="contact-h">Ready to build<br>something <em>like this?</em></h2>
+      <p class="contact-body">Looking for a growth marketer who can own strategy and execution across social, performance, and creative — and actually move the revenue number? Let's talk.</p>
+    </div>
+    <div class="contact-right reveal">
+      <a class="contact-item" href="/cdn-cgi/l/email-protection#fa929f969695ba83958f889e95979b9394d4999597">
+        <div>
+          <div class="contact-item-label">Email</div>
+          <div class="contact-item-val"><span class="__cf_email__" data-cfemail="82eae7eeeeedc2fbedf7f0e6edefe3ebecace1edef">[email&#160;protected]</span></div>
+        </div>
+        <span class="contact-item-arrow">→</span>
+      </a>
+      <a class="contact-item" href="https://linkedin.com/in/yourprofile" target="_blank">
+        <div>
+          <div class="contact-item-label">LinkedIn</div>
+          <div class="contact-item-val">linkedin.com/in/yourprofile</div>
+        </div>
+        <span class="contact-item-arrow">→</span>
+      </a>
+      <a class="contact-item" href="tel:+91XXXXXXXXXX">
+        <div>
+          <div class="contact-item-label">Phone</div>
+          <div class="contact-item-val">+91 XXXXX XXXXX</div>
+        </div>
+        <span class="contact-item-arrow">→</span>
+      </a>
+    </div>
+  </div>
+</div>
+
+<footer>
+  <div class="footer-left">Boss International Studies · Chandigarh HQ · Growth & Lead Generation Case Study</div>
+  <a class="footer-right" href="#">Back to top ↑</a>
+</footer>
+
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+  document.addEventListener('DOMContentLoaded', function() {
+    var reveals = document.querySelectorAll('.reveal');
+    reveals.forEach(function(el) { el.classList.add('js-reveal'); });
+    if ('IntersectionObserver' in window) {
+      var io = new IntersectionObserver(function(entries) {
+        entries.forEach(function(entry) {
+          if (entry.isIntersecting) {
+            entry.target.classList.remove('js-reveal');
+            entry.target.classList.add('visible');
+            io.unobserve(entry.target);
+          }
+        });
+      }, { threshold: 0.05, root
