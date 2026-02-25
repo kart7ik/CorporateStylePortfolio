@@ -10,6 +10,9 @@
 <style>
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
+  /* Prevent horizontal scroll on mobile — common culprit for layout breakage */
+  html, body { overflow-x: hidden; max-width: 100%; }
+
   :root {
     --bg: #fafaf8;
     --white: #ffffff;
@@ -211,7 +214,10 @@
     border-bottom: 1px solid var(--border);
     transition: background 0.2s;
   }
-  .work-row:hover { background: var(--white); margin: 0 -60px; padding: 36px 60px; }
+  /* Only apply the negative-margin hover trick on desktop where there's no overflow risk */
+  @media (min-width: 961px) {
+    .work-row:hover { background: var(--white); margin: 0 -60px; padding: 36px 60px; }
+  }
   .work-num {
     font-size: 12px; color: var(--muted);
     font-weight: 500; letter-spacing: 0.06em;
@@ -425,82 +431,282 @@
   .reveal.visible { opacity: 1; transform: translateY(0); }
 
   /* RESPONSIVE */
-  /* TABLET */
+
+  /* ── TABLET (max 960px) ── */
   @media (max-width: 960px) {
     nav { padding: 0 24px; }
     .nav-center { display: none; }
-    .hero { grid-template-columns: 1fr; gap: 48px; padding: 120px 24px 80px; }
+
+    .hero {
+      grid-template-columns: 1fr;
+      gap: 40px;
+      padding: 110px 24px 80px;
+    }
+    /* On tablet, show photo at a natural size rather than full-width towering block */
+    .hero-photo { height: 280px; object-position: center top; }
+
     .full-rule { margin: 0 24px; }
-    .section-wrap { padding: 80px 24px; }
-    .work-row { grid-template-columns: 1fr; gap: 16px; }
+    .section-wrap { padding: 72px 24px; }
+
+    .work-row {
+      grid-template-columns: 1fr;
+      gap: 16px;
+    }
     .work-row:hover { margin: 0; padding: 36px 0; }
     .work-num { display: none; }
+
+    /* On tablet, show tags + metrics side by side */
+    .work-bottom-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+    }
+
     .skills-grid { grid-template-columns: 1fr 1fr; }
     .about-grid { grid-template-columns: 1fr; gap: 48px; }
-    .contact-inner { grid-template-columns: 1fr; gap: 48px; padding: 60px 24px; }
+
+    .contact-inner {
+      grid-template-columns: 1fr;
+      gap: 40px;
+      padding: 60px 24px;
+    }
+
     footer { padding: 20px 24px; }
+
+    .slider-wrap { padding: 0 24px; gap: 12px; }
+    .slide-item { flex: 0 0 calc(50% - 10px); }
+    .slider-btn { width: 40px; height: 40px; font-size: 16px; }
+    .slider-dots { padding: 0 24px; }
   }
 
-  /* MOBILE */
+  /* ── MOBILE (max 600px) ── */
   @media (max-width: 600px) {
     /* Nav */
-    nav { padding: 0 20px; height: 56px; }
-    .nav-right { padding: 7px 14px; font-size: 11px; }
+    nav {
+      padding: 0 16px;
+      height: 56px;
+    }
+    .nav-logo { font-size: 14px; }
+    .nav-right {
+      padding: 7px 13px;
+      font-size: 10px;
+      letter-spacing: 0.04em;
+      /* Prevent nav CTA from wrapping */
+      white-space: nowrap;
+    }
 
     /* Hero */
-    .hero { padding: 96px 20px 60px; gap: 36px; }
-    .hero-tag { font-size: 10px; padding: 4px 10px; }
-    .hero-headline { font-size: 36px; line-height: 1.1; letter-spacing: -0.02em; }
-    .hero-sub { font-size: 14px; }
-    .hero-ctas { flex-direction: column; gap: 10px; }
-    .btn-solid, .btn-outline { text-align: center; padding: 14px 20px; width: 100%; }
-    .hero-card { padding: 24px 20px; }
-    .h-stat-val { font-size: 22px; }
-    .h-stat-label { font-size: 11px; max-width: 120px; }
-    .hero-card-footer { font-size: 10px; }
+    .hero {
+      padding: 88px 16px 56px;
+      gap: 32px;
+    }
+    .hero-tag {
+      font-size: 9.5px;
+      padding: 4px 10px;
+      letter-spacing: 0.09em;
+      /* Allow tag to wrap gracefully on very small screens */
+      white-space: normal;
+      max-width: 100%;
+    }
+    .hero-headline {
+      font-size: clamp(30px, 8.5vw, 42px);
+      line-height: 1.1;
+      letter-spacing: -0.02em;
+      /* Prevent oversized letters from clipping */
+      overflow-wrap: break-word;
+    }
+    .hero-sub {
+      font-size: 14px;
+      line-height: 1.7;
+      margin-bottom: 32px;
+    }
+    .hero-ctas {
+      flex-direction: column;
+      gap: 10px;
+    }
+    .btn-solid, .btn-outline {
+      text-align: center;
+      padding: 14px 20px;
+      width: 100%;
+      display: block;
+    }
 
-    /* Rules & section wraps */
-    .full-rule { margin: 0 20px; }
-    .section-wrap { padding: 60px 20px; }
-    .section-head { flex-direction: column; gap: 6px; margin-bottom: 36px; }
+    /* Hero photo — keep proportional, not too tall */
+    .hero-photo-wrap { margin-bottom: 12px; }
+    .hero-photo {
+      height: 220px;
+      object-position: center top;
+    }
+    .hero-photo-badge {
+      font-size: 9px;
+      padding: 4px 10px;
+      bottom: 10px; left: 10px;
+    }
+
+    /* Hero stats card */
+    .hero-card { padding: 20px 16px; }
+    .hero-card-title { font-size: 9px; margin-bottom: 18px; }
+    .hero-stat-row { gap: 14px; }
+    .h-stat-val { font-size: 20px; }
+    .h-stat-val sup { font-size: 12px; }
+    .h-stat-label {
+      font-size: 11px;
+      max-width: 130px;
+    }
+    .hero-card-footer {
+      font-size: 10px;
+      line-height: 1.6;
+      margin-top: 16px;
+    }
+
+    /* Rules & Section wraps */
+    .full-rule { margin: 0 16px; }
+    .section-wrap { padding: 52px 16px; }
+    .section-head {
+      flex-direction: column;
+      gap: 4px;
+      margin-bottom: 32px;
+      padding-bottom: 16px;
+    }
     .section-title { font-size: 22px; }
+    .section-count { font-size: 10px; }
 
-    /* Work rows */
-    .work-row { padding: 28px 0; gap: 12px; }
-    .work-title { font-size: 16px; }
-    .work-desc { font-size: 13px; }
-    .work-metrics { flex-direction: row; flex-wrap: wrap; gap: 16px; padding-top: 0; }
+    /* Work */
+    .work-row {
+      padding: 24px 0;
+      gap: 14px;
+    }
+    .work-title { font-size: 16px; line-height: 1.3; }
+    .work-brand { font-size: 9.5px; margin-bottom: 5px; }
+    .work-desc { font-size: 13px; line-height: 1.65; }
+
+    /* Tags: pill-style wrapping row */
+    .work-tags {
+      flex-direction: row;
+      flex-wrap: wrap;
+      gap: 6px;
+      padding-top: 0;
+    }
+    .w-tag {
+      font-size: 10.5px;
+      background: var(--accent-light);
+      color: var(--accent);
+      padding: 3px 8px;
+      border-radius: 2px;
+    }
+    /* Hide the dot prefix on mobile pill style */
+    .w-tag::before { display: none; }
+
+    /* Metrics: horizontal, side by side */
+    .work-metrics {
+      flex-direction: row;
+      flex-wrap: wrap;
+      gap: 14px 20px;
+      padding-top: 0;
+    }
     .w-val { font-size: 18px; }
-    .work-tags { flex-direction: row; flex-wrap: wrap; gap: 8px; padding-top: 0; }
-    .w-tag { font-size: 11px; }
+    .w-label { font-size: 9.5px; letter-spacing: 0.06em; }
+
+    /* Case study link — make it tap-friendly */
+    .work-main a[href="rxn-casestudy.html"] {
+      font-size: 11px;
+      padding-bottom: 3px;
+      margin-top: 12px;
+    }
 
     /* Skills */
     .skills-grid { grid-template-columns: 1fr; gap: 2px; }
-    .skill-block { padding: 24px 20px; }
-    .skill-item { font-size: 13px; }
+    .skill-block { padding: 22px 16px; }
+    .skill-block-title { font-size: 9.5px; margin-bottom: 16px; }
+    .skill-item { font-size: 13px; gap: 7px; }
 
     /* About */
-    .about-grid { gap: 36px; }
-    .about-intro { font-size: 18px; }
-    .about-body { font-size: 13px; }
-    .about-links { flex-direction: column; gap: 10px; }
+    .about-grid { gap: 32px; }
+    .about-intro { font-size: 18px; line-height: 1.4; margin-bottom: 20px; }
+    .about-body { font-size: 13px; line-height: 1.8; margin-bottom: 28px; }
+    .about-links {
+      flex-direction: column;
+      gap: 10px;
+    }
     .about-links .btn-solid,
-    .about-links .btn-outline { text-align: center; }
-    .exp-row { grid-template-columns: 90px 1fr; gap: 16px; }
-    .exp-date-col { font-size: 10px; }
-    .exp-title { font-size: 13px; }
-    .exp-note { font-size: 11px; }
+    .about-links .btn-outline {
+      text-align: center;
+      width: 100%;
+      display: block;
+    }
+
+    /* Experience timeline */
+    .exp-row {
+      grid-template-columns: 80px 1fr;
+      gap: 12px;
+      padding: 20px 0;
+    }
+    .exp-date-col { font-size: 10px; line-height: 1.5; }
+    .exp-title { font-size: 13px; margin-bottom: 2px; }
+    .exp-company-name { font-size: 10px; margin-bottom: 5px; }
+    .exp-note { font-size: 11px; line-height: 1.55; }
 
     /* Contact */
-    .contact-inner { padding: 48px 20px; gap: 36px; }
-    .contact-pre { font-size: 9px; }
-    .contact-h { font-size: 28px; }
+    .contact-inner {
+      padding: 48px 16px;
+      gap: 32px;
+    }
+    .contact-pre { font-size: 9px; letter-spacing: 0.12em; }
+    .contact-h {
+      font-size: clamp(24px, 7vw, 36px);
+      line-height: 1.2;
+      margin-bottom: 16px;
+    }
     .contact-body { font-size: 13px; }
-    .contact-item { padding: 16px 18px; }
-    .contact-item-val { font-size: 13px; }
+    .contact-item {
+      padding: 16px 16px;
+      /* Ensure arrow doesn't push content off edge */
+      gap: 12px;
+    }
+    .contact-item-label { font-size: 9.5px; }
+    .contact-item-val {
+      font-size: 13px;
+      /* Long email shouldn't overflow */
+      word-break: break-all;
+    }
+    .contact-item-arrow { font-size: 14px; flex-shrink: 0; }
 
     /* Footer */
-    footer { flex-direction: column; gap: 8px; text-align: center; padding: 20px; }
+    footer {
+      flex-direction: column;
+      gap: 6px;
+      text-align: center;
+      padding: 20px 16px;
+    }
+    .footer-left, .footer-right { font-size: 10px; }
+
+    /* Gallery slider */
+    .gallery-section { padding-bottom: 56px; }
+    .slider-wrap { padding: 0 12px; gap: 8px; }
+    .slide-item { flex: 0 0 calc(88% - 8px); }
+    .slider-btn { width: 36px; height: 36px; font-size: 13px; }
+    .slider-dots { padding: 0 12px; margin-top: 18px; }
+    .slide-overlay {
+      opacity: 1;
+      background: linear-gradient(to top, rgba(26,26,24,0.78) 0%, transparent 58%);
+    }
+    .slide-caption { font-size: 11.5px; }
+  }
+
+  /* ── VERY SMALL (max 380px) ── */
+  @media (max-width: 380px) {
+    .hero-headline { font-size: 27px; }
+    .hero-tag { font-size: 9px; letter-spacing: 0.07em; }
+    nav { padding: 0 12px; }
+    .nav-right { font-size: 9.5px; padding: 6px 10px; }
+    .section-wrap { padding: 44px 14px; }
+    .full-rule { margin: 0 14px; }
+    .contact-inner { padding: 40px 14px; }
+    .contact-h { font-size: 22px; }
+    .exp-row { grid-template-columns: 70px 1fr; gap: 10px; }
+    .exp-date-col { font-size: 9.5px; }
+    .slider-wrap { padding: 0 8px; gap: 6px; }
+    .slide-item { flex: 0 0 calc(92% - 6px); }
   }
 
   /* HERO PHOTO */
@@ -611,12 +817,99 @@
     white-space: nowrap;
   }
 
-  /* Gallery mobile */
-  @media (max-width: 600px) {
-    .gallery-grid { grid-template-columns: 1fr 1fr; gap: 2px; }
-    .gallery-overlay { opacity: 1; }
-    .hero-photo { height: 220px; }
+  /* Gallery mobile — handled in unified responsive block */
+
+  /* ── GALLERY SLIDER ── */
+  .gallery-section { background: var(--white); padding-bottom: 72px; }
+
+  .slider-wrap {
+    position: relative;
+    display: flex; align-items: center;
+    padding: 0 60px;
+    gap: 16px;
   }
+
+  .slider-track-outer {
+    flex: 1; overflow: hidden;
+  }
+
+  .slider-track {
+    display: flex;
+    gap: 20px;
+    transition: transform 0.45s cubic-bezier(0.4, 0, 0.2, 1);
+    will-change: transform;
+  }
+
+  .slide-item {
+    flex: 0 0 calc(33.333% - 14px);
+    min-width: 0;
+    position: relative;
+    overflow: hidden;
+    cursor: pointer;
+    background: var(--border);
+    border: 1px solid var(--border);
+    aspect-ratio: 4/3;
+  }
+
+  .slide-item img {
+    width: 100%; height: 100%;
+    object-fit: cover; display: block;
+    transition: transform 0.5s ease, filter 0.3s ease;
+    filter: grayscale(10%);
+  }
+
+  .slide-item:hover img {
+    transform: scale(1.05);
+    filter: grayscale(0%);
+  }
+
+  /* Hover overlay caption */
+  .slide-overlay {
+    position: absolute; inset: 0;
+    background: linear-gradient(to top, rgba(26,26,24,0.88) 0%, rgba(26,26,24,0.2) 50%, transparent 100%);
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    display: flex; align-items: flex-end;
+    padding: 20px;
+  }
+
+  .slide-item:hover .slide-overlay { opacity: 1; }
+
+  .slide-caption {
+    font-size: 13px; font-weight: 500;
+    color: #ffffff; line-height: 1.45;
+    letter-spacing: 0.01em;
+  }
+
+  .slider-btn {
+    flex-shrink: 0;
+    width: 44px; height: 44px;
+    background: var(--ink); color: white;
+    border: none; cursor: pointer;
+    font-size: 18px;
+    display: flex; align-items: center; justify-content: center;
+    transition: background 0.2s;
+    z-index: 2;
+  }
+  .slider-btn:hover { background: var(--accent); }
+  .slider-btn:disabled { background: var(--border); color: var(--muted); cursor: not-allowed; }
+
+  .slider-dots {
+    display: flex; justify-content: center;
+    gap: 8px; margin-top: 24px; padding: 0 60px;
+  }
+  .slider-dot {
+    width: 6px; height: 6px;
+    border-radius: 50%; background: var(--rule);
+    border: none; cursor: pointer; padding: 0;
+    transition: background 0.2s, transform 0.2s;
+  }
+  .slider-dot.active {
+    background: var(--ink);
+    transform: scale(1.4);
+  }
+
+  /* Slider responsive — handled in unified responsive block */
 </style>
 </head>
 <body>
@@ -749,9 +1042,9 @@
     <div class="work-row reveal">
       <div class="work-num">03</div>
       <div class="work-main">
-        <div class="work-brand">RXN Sports · KG Cricket</div>
-        <div class="work-title">From Niche Brand to ₹50L in 30 Days</div>
-        <div class="work-desc">Generated 3,861 qualified leads at ₹5.83 CPL, drove ₹1,00,000+ from a 500-follower micro-influencer, scaled website revenue 29% in 3 months, and contributed to ₹50L in Amazon sales in 30 days — through coordinated Meta campaigns, coupon-led influencer attribution, and niche content strategy.</div>
+        <div class="work-brand">RXN Sports</div>
+        <div class="work-title">Performance & Brand Growth — D2C Sports</div>
+        <div class="work-desc">Generated leads, scaled website revenue by 29% in 3 months, drove ₹1,00,000+ from a 500-follower micro-influencer using a single coupon code, contributed to ₹50L Amazon sales, and strengthened brand authority through niche organic content and strategic industry collaborations.</div>
         <a href="rxn-casestudy.html" style="display:inline-flex;align-items:center;gap:6px;margin-top:16px;font-size:11px;font-weight:600;letter-spacing:0.08em;text-transform:uppercase;color:var(--accent);text-decoration:none;border-bottom:1px solid var(--accent);padding-bottom:2px;transition:opacity 0.2s;" onmouseover="this.style.opacity='0.7'" onmouseout="this.style.opacity='1'">View Full Case Study →</a>
       </div>
       <div class="work-tags">
@@ -762,10 +1055,6 @@
       </div>
       <div class="work-metrics">
         <div class="w-metric">
-          <span class="w-val">3,861+</span>
-          <span class="w-label">Leads at ₹5.83 CPL</span>
-        </div>
-        <div class="w-metric">
           <span class="w-val">₹50L</span>
           <span class="w-label">Amazon in 30 Days</span>
         </div>
@@ -773,25 +1062,38 @@
           <span class="w-val">+29%</span>
           <span class="w-label">Website Revenue</span>
         </div>
+        <div class="w-metric">
+          <span class="w-val">₹1L+</span>
+          <span class="w-label">via Micro-Influencer</span>
+        </div>
       </div>
     </div>
 
     <div class="work-row reveal">
       <div class="work-num">04</div>
       <div class="work-main">
-        <div class="work-brand">Jigsaw Olympiad · HCL × Times of India</div>
-        <div class="work-title">Student Acquisition Campaign</div>
-        <div class="work-desc">Drove student acquisition for a national-level Olympiad co-organised by HCL and Times of India. Managed school outreach programs and targeted influencer campaigns to generate qualified sign-ups — balancing community engagement with performance distribution.</div>
+        <div class="work-brand">KG Cricket</div>
+        <div class="work-title">Organic Growth & YouTube Channel Build</div>
+        <div class="work-desc">Increased KG Cricket's Instagram followers from 11.9K to 15.8K, maintained 150K+ monthly Instagram profile views, and built a YouTube channel from scratch to 1,200+ subscribers generating 3.1M+ views. Currently working on improving sales via Meta Ads campaigns.</div>
       </div>
       <div class="work-tags">
-        <span class="w-tag">Event Marketing</span>
-        <span class="w-tag">Influencer Targeting</span>
-        <span class="w-tag">Community Growth</span>
+        <span class="w-tag">Instagram Growth</span>
+        <span class="w-tag">YouTube Strategy</span>
+        <span class="w-tag">Organic Content</span>
+        <span class="w-tag">Meta Ads</span>
       </div>
       <div class="work-metrics">
         <div class="w-metric">
-          <span class="w-val">350+</span>
-          <span class="w-label">Sign-ups Driven</span>
+          <span class="w-val">3.1M+</span>
+          <span class="w-label">YouTube Views</span>
+        </div>
+        <div class="w-metric">
+          <span class="w-val">150K+</span>
+          <span class="w-label">Monthly IG Profile Views</span>
+        </div>
+        <div class="w-metric">
+          <span class="w-val">+3.9K</span>
+          <span class="w-label">Instagram Followers</span>
         </div>
       </div>
     </div>
@@ -813,43 +1115,43 @@
         <div class="skill-block-title">Performance & Paid</div>
         <div class="skill-list">
           <span class="skill-item">Meta Ads (Facebook & Instagram)</span>
-          <span class="skill-item">Google Ads</span>
+          <span class="skill-item">Meta Ads Manager</span>
           <span class="skill-item">CPL Reduction & Optimisation</span>
           <span class="skill-item">A/B Creative Testing</span>
           <span class="skill-item">Audience Segmentation</span>
-          <span class="skill-item">Full-Funnel Campaign Strategy</span>
+          <span class="skill-item">Full-Funnel Growth Strategy</span>
         </div>
       </div>
       <div class="skill-block">
         <div class="skill-block-title">Social & Content</div>
         <div class="skill-list">
-          <span class="skill-item">Instagram Growth & Strategy</span>
+          <span class="skill-item">Social Media & Engagement</span>
+          <span class="skill-item">Organic Content Growth</span>
+          <span class="skill-item">Content Marketing</span>
           <span class="skill-item">YouTube Content & Production</span>
           <span class="skill-item">Reels / Short-Form Video</span>
-          <span class="skill-item">Content Calendar Management</span>
-          <span class="skill-item">Influencer Collaborations</span>
           <span class="skill-item">Community Building</span>
         </div>
       </div>
       <div class="skill-block">
         <div class="skill-block-title">Strategy & Positioning</div>
         <div class="skill-list">
-          <span class="skill-item">Brand-Led Growth Strategy</span>
+          <span class="skill-item">Brand Strategy & Positioning</span>
           <span class="skill-item">Consumer Psychology</span>
           <span class="skill-item">Creative Strategy</span>
           <span class="skill-item">Storytelling Frameworks</span>
-          <span class="skill-item">Growth Loop Design</span>
-          <span class="skill-item">Funnel Architecture</span>
+          <span class="skill-item">Influencer Partnerships</span>
+          <span class="skill-item">Team Management</span>
         </div>
       </div>
       <div class="skill-block">
         <div class="skill-block-title">Tools & Analytics</div>
         <div class="skill-list">
-          <span class="skill-item">Meta Business Suite</span>
-          <span class="skill-item">Google Analytics 4 (GA4)</span>
-          <span class="skill-item">Looker Studio</span>
+          <span class="skill-item">Google Analytics / Meta Pixel</span>
+          <span class="skill-item">Custom Dashboards (Sheets/Excel)</span>
+          <span class="skill-item">Canva & Adobe Softwares</span>
           <span class="skill-item">Notion</span>
-          <span class="skill-item">Canva / Figma</span>
+          <span class="skill-item">Meta Business Suite</span>
           <span class="skill-item">Data Science (IBM Certified)</span>
         </div>
       </div>
@@ -924,6 +1226,66 @@
   </div>
 </div>
 
+
+<!-- GALLERY -->
+<div class="full-rule"></div>
+<div class="gallery-section" id="gallery">
+  <div class="section-wrap">
+    <div class="section-head reveal">
+      <h2 class="section-title">In the Field</h2>
+      <span class="section-count">Behind the Work</span>
+    </div>
+  </div>
+
+  <div class="slider-wrap">
+    <button class="slider-btn slider-prev" onclick="slideGallery(-1)" aria-label="Previous">&#8592;</button>
+    <div class="slider-track-outer">
+      <div class="slider-track" id="sliderTrack">
+
+        <div class="slide-item" onclick="openLightbox(this)">
+          <img src="https://res.cloudinary.com/dkwiquxyb/image/upload/v1771954364/With_Aman_Dhattarwal_mnbrxj.jpg" alt="With Mr. Aman Dhattarwal" loading="lazy" />
+          <div class="slide-caption">With Mr. Aman Dhattarwal</div>
+        </div>
+
+        <div class="slide-item" onclick="openLightbox(this)">
+          <img src="https://res.cloudinary.com/dkwiquxyb/image/upload/v1771954364/With_Sunny_Bhandarkar_and_Kaustub_of7oml.jpg" alt="With Mr. Sunny Bhandarkar & Mr. Kaustub" loading="lazy" />
+          <div class="slide-caption">With CEO of EPBL Mr. Sunny Bhandarkar & CMO Mr. Kaustub</div>
+        </div>
+
+        <div class="slide-item" onclick="openLightbox(this)">
+          <img src="https://res.cloudinary.com/dkwiquxyb/image/upload/v1771954364/HarGhar_TIranga_Campaign_xzmx9q.jpg" alt="Har Ghar Tiranga Campaign LPU" loading="lazy" />
+          <div class="slide-caption">Behind the Scenes — Har Ghar Tiranga Campaign, LPU</div>
+        </div>
+
+        <div class="slide-item" onclick="openLightbox(this)">
+          <img src="https://res.cloudinary.com/dkwiquxyb/image/upload/v1771954364/Neeraj_Goyat_Collab_e0uxpq.jpg" alt="Influencer Neeraj Goyat at Shimla Pro Boxing" loading="lazy" />
+          <div class="slide-caption">Brand Collab — Influencer Neeraj Goyat, Shimla Pro Boxing Event</div>
+        </div>
+
+        <div class="slide-item" onclick="openLightbox(this)">
+          <img src="https://res.cloudinary.com/dkwiquxyb/image/upload/v1771954367/With_the_Sports_Minister_t1lbxw.jpg" alt="At Delhi Vidhan Sabha with Youth & Affairs Minister" loading="lazy" />
+          <div class="slide-caption">At Delhi Vidhan Sabha — with Youth & Sports Affairs Minister of India</div>
+        </div>
+
+        <div class="slide-item" onclick="openLightbox(this)">
+          <img src="https://res.cloudinary.com/dkwiquxyb/image/upload/v1771954380/RXN_Fit_India_Delhi_yeorog.jpg" alt="With RXN Sports team at Khelo India" loading="lazy" />
+          <div class="slide-caption">With Team RXN Sports at the Khelo India Event, Delhi</div>
+        </div>
+
+        <div class="slide-item" onclick="openLightbox(this)">
+          <img src="https://res.cloudinary.com/dkwiquxyb/image/upload/v1771954655/LPUEventsPic_psqej2.jpg" alt="Behind the scenes LPU Events" loading="lazy" />
+          <div class="slide-caption">Behind the Scenes — LPU Events</div>
+        </div>
+
+      </div>
+    </div>
+    <button class="slider-btn slider-next" onclick="slideGallery(1)" aria-label="Next">&#8594;</button>
+  </div>
+
+  <!-- Dots -->
+  <div class="slider-dots" id="sliderDots"></div>
+</div>
+
 <!-- CONTACT -->
 <div class="contact-section" id="contact">
   <div class="contact-inner">
@@ -954,62 +1316,6 @@
         </div>
         <span class="contact-item-arrow">→</span>
       </a>
-    </div>
-  </div>
-</div>
-
-
-<!-- GALLERY -->
-<div class="full-rule"></div>
-<div class="gallery-section" id="gallery">
-  <div class="section-wrap">
-    <div class="section-head reveal">
-      <h2 class="section-title">In the Field</h2>
-      <span class="section-count">Behind the Work</span>
-    </div>
-  </div>
-  <div class="gallery-grid">
-    <div class="gallery-item reveal" onclick="openLightbox(this)">
-      <img src="https://drive.google.com/uc?export=view&id=13po0kVe0qd587v6E4Au7wwLPODv8mENn" alt="With CEO of ESI, EPBL India" loading="lazy" />
-      <div class="gallery-overlay">
-        <div class="gallery-caption">With CEO of ESI & CMO of EPBL India — Mr. Sunny Bhandarkar & Mr. Kaustub</div>
-      </div>
-    </div>
-    <div class="gallery-item reveal" onclick="openLightbox(this)">
-      <img src="https://drive.google.com/uc?export=view&id=1mepMxeJ6QKPbydhiaxFgbHlbpE6Zn5o3" alt="Presenting at Might West Championship" loading="lazy" />
-      <div class="gallery-overlay">
-        <div class="gallery-caption">Presenting at Might West Championship, IPS College Gwalior — LPU DSO Events 2022</div>
-      </div>
-    </div>
-    <div class="gallery-item reveal" onclick="openLightbox(this)">
-      <img src="https://drive.google.com/uc?export=view&id=1cDEBiv4veDEwH3wEwdMrBm_Iijz2c64v" alt="LPU Har Ghar Tiranga Campaign" loading="lazy" />
-      <div class="gallery-overlay">
-        <div class="gallery-caption">Wrapping Up the LPU Har Ghar Tiranga Campaign</div>
-      </div>
-    </div>
-    <div class="gallery-item reveal" onclick="openLightbox(this)">
-      <img src="https://drive.google.com/uc?export=view&id=1HQpeJApxUsZv8SzUsqb_8nc5IG2g4L-V" alt="AIU Esports Championship BTS" loading="lazy" />
-      <div class="gallery-overlay">
-        <div class="gallery-caption">Behind the Scenes — AIU Esports Championship</div>
-      </div>
-    </div>
-    <div class="gallery-item reveal" onclick="openLightbox(this)">
-      <img src="https://drive.google.com/uc?export=view&id=1HyZvyAU2ApOfisxdfuG80fmG5JHhSFEd" alt="Team RXN Sports at Fit India Event Delhi" loading="lazy" />
-      <div class="gallery-overlay">
-        <div class="gallery-caption">With Team RXN Sports at the Fit India Event, Delhi</div>
-      </div>
-    </div>
-    <div class="gallery-item reveal" onclick="openLightbox(this)">
-      <img src="https://drive.google.com/uc?export=view&id=1L4E4-xwsGgN12Ntu65EVqGLyIsq8DRhM" alt="Brand Collab with Neeraj Goyat" loading="lazy" />
-      <div class="gallery-overlay">
-        <div class="gallery-caption">Brand Collab with Influencer Neeraj Goyat — Shimla Pro Boxing Event</div>
-      </div>
-    </div>
-    <div class="gallery-item reveal" onclick="openLightbox(this)" style="grid-column: span 3;">
-      <img src="https://drive.google.com/uc?export=view&id=1wLTH2k8Yxwt2Wu9KBKd6HQ5bq8cXz8Qv" alt="Delhi Government Event with Sports Minister" loading="lazy" style="height:320px;" />
-      <div class="gallery-overlay">
-        <div class="gallery-caption">Delhi Government of India Event — with Sports & Youth Affairs Minister of India</div>
-      </div>
     </div>
   </div>
 </div>
@@ -1076,5 +1382,75 @@
     if (e.key === 'Escape') closeLightbox();
   });
 </script>
+
+<script>
+  // ── GALLERY SLIDER ──
+  (function() {
+    var track = document.getElementById('sliderTrack');
+    var dotsWrap = document.getElementById('sliderDots');
+    if (!track) return;
+
+    var slides = track.querySelectorAll('.slide-item');
+    var total = slides.length;
+    var current = 0;
+    var perView = getPerView();
+
+    function getPerView() {
+      return window.innerWidth <= 600 ? 1 : window.innerWidth <= 960 ? 2 : 3;
+    }
+
+    var maxIndex = Math.max(0, total - perView);
+
+    // Build dots
+    for (var i = 0; i <= maxIndex; i++) {
+      var dot = document.createElement('button');
+      dot.className = 'slider-dot' + (i === 0 ? ' active' : '');
+      dot.setAttribute('aria-label', 'Go to slide ' + (i + 1));
+      (function(idx) { dot.addEventListener('click', function() { goTo(idx); }); })(i);
+      dotsWrap.appendChild(dot);
+    }
+
+    function goTo(idx) {
+      current = Math.max(0, Math.min(idx, maxIndex));
+      var slideW = slides[0].offsetWidth + 20; // width + gap
+      track.style.transform = 'translateX(-' + (current * slideW) + 'px)';
+      // update dots
+      var dots = dotsWrap.querySelectorAll('.slider-dot');
+      dots.forEach(function(d, i) { d.classList.toggle('active', i === current); });
+      // update buttons
+      document.querySelector('.slider-prev').disabled = current === 0;
+      document.querySelector('.slider-next').disabled = current >= maxIndex;
+    }
+
+    window.slideGallery = function(dir) { goTo(current + dir); };
+
+    // Recalc on resize
+    window.addEventListener('resize', function() {
+      perView = getPerView();
+      maxIndex = Math.max(0, total - perView);
+      current = Math.min(current, maxIndex);
+      // Rebuild dots
+      dotsWrap.innerHTML = '';
+      for (var i = 0; i <= maxIndex; i++) {
+        var dot = document.createElement('button');
+        dot.className = 'slider-dot' + (i === current ? ' active' : '');
+        (function(idx) { dot.addEventListener('click', function() { goTo(idx); }); })(i);
+        dotsWrap.appendChild(dot);
+      }
+      goTo(current);
+    });
+
+    // Touch/swipe support
+    var touchStartX = 0;
+    track.addEventListener('touchstart', function(e) { touchStartX = e.touches[0].clientX; }, { passive: true });
+    track.addEventListener('touchend', function(e) {
+      var diff = touchStartX - e.changedTouches[0].clientX;
+      if (Math.abs(diff) > 50) slideGallery(diff > 0 ? 1 : -1);
+    }, { passive: true });
+
+    goTo(0);
+  })();
+</script>
+
 </body>
 </html>
